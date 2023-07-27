@@ -2,7 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Socket, connect } from "socket.io-client";
 
-const socket: Socket = connect("http://localhost:3000");
+const socket: Socket = connect("https://chat-app-node-2nmn.onrender.com");
 
 type message = {
   id: string;
@@ -63,15 +63,13 @@ export default function Room() {
 
     window.addEventListener("close", () => {
       socket.emit("leaveRoom", { name, roomId, from: socket.id });
-    }
-    );
+    });
 
     return () => {
       window.removeEventListener("close", () => {
         socket.emit("leaveRoom", { name, roomId, from: socket.id });
       });
-    }
-
+    };
   }, [messages, name, roomId]);
 
   return (
